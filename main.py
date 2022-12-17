@@ -49,7 +49,7 @@ def main():
                 or game_field[1:8:3] == o_plr \
                 or game_field[2:9:3] == o_plr \
                 or game_field[2:7:2] == o_plr \
-                or game_field[0:9:4] == x_plr:
+                or game_field[0:9:4] == o_plr:
             status = False
         return status
 

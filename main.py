@@ -23,29 +23,29 @@ def main():
                 print(ch)
 
     def player_choice(symbol):  # checks valid of user choice and draws it on field
-        choice = input('Choose cell from 1 to 9: ')
-        if choice not in [str(num) for num in range(1, 10)]:
-            print('Incorrect value')
-            player_choice(symbol)
-        else:
-            choice = int(choice)
-            choice = choice - 1
-            if game_field[choice] == 'n':
-                if symbol == 'x':
-                    game_field[choice] = 'x'
+        while True:
+            try:
+                choice = int(input('Choose cell from 1 to 9: ')) - 1
+                if game_field[choice] == 'n':
+                    game_field[choice] = symbol
+                    break
                 else:
-                    game_field[choice] = 'o'
-            else:
-                print('That cell is already taken, choose another.')
-                player_choice(symbol)
+                    print('That cell is already taken, choose another.')
+                    continue
+            except ValueError:
+                print('Value Error, only integers in are allowed.')
+            except IndexError:
+                print('Cell number error. Only integers from 1 to 9')
 
     def machine_choice(symbol):
+        print(f'"{symbol}" Computer is thinking...')
         choice = random.randrange(0, 9)
         while game_field[choice] != 'n':
             choice = random.randrange(0, 9)
         game_field[choice] = symbol
 
-    def win_checker(win_combination):  # checks win and update status of the game
+    def winner(symbol):  # checks win and update status of the game
+        win_combination = list(symbol * 3)
         status = False
         if game_field[0:3] == win_combination \
                 or game_field[3:6] == win_combination \
@@ -64,7 +64,7 @@ def main():
             while True:
                 player_choice('x')
                 game_field_draw()
-                if win_checker(['x', 'x', 'x']) is True:
+                if winner('x') is True:
                     print('X player won')
                     break
                 if 'n' not in game_field:
@@ -72,7 +72,7 @@ def main():
                     break
                 player_choice('o')
                 game_field_draw()
-                if win_checker(['o', 'o', 'o']) is True:
+                if winner('o') is True:
                     print('O player won')
                     break
         elif game_mode == 2:
@@ -80,34 +80,31 @@ def main():
             while True:
                 player_choice('x')
                 game_field_draw()
-                if win_checker(['x', 'x', 'x']) is True:
+                if winner('x') is True:
                     print('X player won')
                     break
                 if 'n' not in game_field:
                     print('It\'s draw!')
                     break
                 machine_choice('o')
-                print('Computer is thinking...')
                 game_field_draw()
-                if win_checker(['o', 'o', 'o']) is True:
+                if winner('o') is True:
                     print('Computer won!')
                     break
         elif game_mode == 3:
             game_field_draw()
             while True:
-                print('"x" Computer is thinking...')
                 machine_choice('x')
                 game_field_draw()
-                if win_checker(['x', 'x', 'x']) is True:
+                if winner('x') is True:
                     print('"x" Computer won!')
                     break
                 if 'n' not in game_field:
                     print('It\'s draw!')
                     break
                 machine_choice('o')
-                print('"o" Computer is thinking...')
                 game_field_draw()
-                if win_checker(['o', 'o', 'o']) is True:
+                if winner('o') is True:
                     print('"o" Computer won!')
                     break
 

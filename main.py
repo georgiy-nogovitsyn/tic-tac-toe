@@ -6,7 +6,7 @@ def main():
         try:
             game_mode = int(
                 input('Choose a game mode: 1 - Player vs Player, 2 - Player vs Machine, 3 - Machine vs Machine: '))
-            if game_mode not in [num for num in range(1, 4)]:
+            if game_mode not in range(1, 4):
                 print('Only 1, 2, 3 integers')
             else:
                 break
@@ -16,11 +16,11 @@ def main():
     game_field = ['n' for _ in range(0, 9)]
 
     def game_field_draw():  # draw a 3x3 game field
-        for counter, ch in enumerate(game_field):
+        for counter, char in enumerate(game_field):
             if (counter + 1) % 3 != 0:
-                print(ch, end=' ')
+                print(char, end=' ')
             else:
-                print(ch)
+                print(char)
 
     def player_choice(symbol):  # checks valid of user choice and draws it on field
         while True:
@@ -59,8 +59,8 @@ def main():
         return status
 
     def game(game_mode):  # starts game
+        game_field_draw()
         if game_mode == 1:
-            game_field_draw()
             while True:
                 player_choice('x')
                 game_field_draw()
@@ -76,7 +76,6 @@ def main():
                     print('O player won')
                     break
         elif game_mode == 2:
-            game_field_draw()
             while True:
                 player_choice('x')
                 game_field_draw()
@@ -92,7 +91,6 @@ def main():
                     print('Computer won!')
                     break
         elif game_mode == 3:
-            game_field_draw()
             while True:
                 machine_choice('x')
                 game_field_draw()
